@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
   "user/login",
   async ({ username, password, navigate, toast }) => {
     try {
-      const response = await axios.post("http://localhost:8000/user/login", {
+      const response = await axios.post("https://chatapp-server-yfh2.onrender.com/user/login", {
         username,
         password,
       });

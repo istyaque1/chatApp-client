@@ -11,7 +11,7 @@ export const getAllUsers = createAsyncThunk(
   "getUsers/all",
   async (token) => {
     try {
-      const response = await axios.get("http://localhost:8000/user/all", {
+      const response = await axios.get("https://chatapp-server-yfh2.onrender.com/user/all", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
