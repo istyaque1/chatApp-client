@@ -29,12 +29,15 @@ export const createUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "user/login",
-  async ({ username, password, navigate, toast }) => {
+  async ({ username, password, navigate, toast,dispatch }) => {
     try {
-      const response = await axios.post("https://chatapp-server-yfh2.onrender.com/user/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://chatapp-server-yfh2.onrender.com/user/login",
+        {
+          username,
+          password,
+        }
+      );
 
       if (response?.data?.status === true) {
         localStorage.setItem("token", response?.data?.token);
@@ -42,9 +45,9 @@ export const loginUser = createAsyncThunk(
         localStorage.setItem("username", response?.data?.username);
         localStorage.setItem("profilepic", response?.data?.profilepic);
 
-        navigate("/chat");
-
         toast.success(response?.data?.message);
+
+        navigate("/chat");
 
         return response.data;
       }

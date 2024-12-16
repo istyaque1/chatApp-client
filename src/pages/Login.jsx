@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Svg from "../assets/bg.svg";
@@ -29,8 +29,9 @@ const Login = () => {
   const handleSubmit = (e) => {
     const { username, password } = value;
     e.preventDefault();
-    dispatch(loginUser({ username, password, navigate, toast }));
+    dispatch(loginUser({ username, password, navigate, toast,dispatch }));
   };
+
   return (
     <div className="register">
       <div className="form">
@@ -98,7 +99,12 @@ const Login = () => {
             don't have an account ,
             <span onClick={() => navigate("/register")}>sign up</span>
           </p>
-          <p style={{ cursor: "pointer" }} onClick={()=>navigate("/forget-password")}>Forget password</p>
+          {/* <p
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/forget-password")}
+          >
+            Forget password
+          </p> */}
         </div>
       </div>
       <div className="svg">
