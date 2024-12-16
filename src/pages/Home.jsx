@@ -4,7 +4,7 @@ import MessageContainer from "../components/MessageContainer";
 import io from "socket.io-client";
 
 const Home = ({ setRefresh }) => {
-  const socket = io("http://localhost:8000");
+  const socket = io("https://chatapp-server-yfh2.onrender.com");
 
   const [showsidebar, setShowSidebar] = useState(false);
 
