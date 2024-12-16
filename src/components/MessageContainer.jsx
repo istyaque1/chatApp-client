@@ -22,7 +22,7 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
   const handleSend = (e) => {
     axios
       .post(
-        `http://localhost:8000/user/send/message/${selectUser?._id}`,
+        `https://chatapp-server-yfh2.onrender.com/user/send/message/${selectUser?._id}`,
         { message: input },
         {
           headers: {

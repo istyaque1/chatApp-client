@@ -10,7 +10,7 @@ export const createUser = createAsyncThunk(
   async ({ formData, navigate, toast }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/user/register",
+        "https://chatapp-server-yfh2.onrender.com/user/register",
         formData,
         {
           headers: {
