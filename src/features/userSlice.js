@@ -44,8 +44,6 @@ export const loginUser = createAsyncThunk(
       );
 
       if (response?.data?.status === true) {
-        console.log(response?.data);
-
         const { token, userId, username, profilepic } = response?.data;
         localStorage.setItem("token", token);
         localStorage.setItem("userid", userId);
