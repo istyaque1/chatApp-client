@@ -45,7 +45,6 @@ label ::placeholder {
   display: flex;
   background-color: #181c14;
   border-radius: 5px;
-
 }
 
 .main-chat {
@@ -220,9 +219,9 @@ img {
   gap: 10px;
 }
 
-.react-emoji-picker--wrapper{
-  width: 290px;
-  overflow: unset;
+.react-emoji-picker--wrapper {
+  width: 290px !important;
+  overflow: unset !important;
 }
 
 .msg-footer input {
