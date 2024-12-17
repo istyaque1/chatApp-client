@@ -233,11 +233,14 @@ img {
   font-family: "Itim", serif;
 }
 
-.msg-footer span {
+.msg-footer button {
   font-size: 2rem;
   color: #eb3678;
   cursor: pointer;
   margin-left: 1rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 /* message header*/
 
@@ -620,6 +623,15 @@ p {
 }
 
 /* popup */
+
+.msg-footer input {
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  display: flex;
+  padding: 9px 16px;
+}
 
 /* media Query for register and login*/
 

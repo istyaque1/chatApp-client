@@ -22,6 +22,7 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
   );
 
   const handleSend = (e) => {
+    e.preventDefault();
     axios
       .post(
         `https://chatapp-server-yfh2.onrender.com/user/send/message/${selectUser?._id}`,
@@ -179,18 +180,23 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
               )}
             </div>
 
-            <div className="msg-footer">
-              <InputEmoji
+            <form className="msg-footer">
+              {/* <InputEmoji
                 value={input}
                 onChange={setInput}
                 cleanOnEnter
                 placeholder="Type a message"
-              />
+              /> */}
 
-              <span onClick={handleSend}>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type a message"
+              ></input>
+              <button onClick={handleSend} type="submit">
                 <IoSend />
-              </span>
-            </div>
+              </button>
+            </form>
           </div>
         </>
       )}
