@@ -284,14 +284,14 @@ img {
   width: max-content;
   background-image: linear-gradient(
     to right top,
-    #d16ba5,
-    #a25e97,
-    #765183,
+    #d16ba593,
+    #a25e979d,
+    #765183b4,
     #4f4269,
-    #0f386d,
-    #0e448f,
-    #1d4fb2,
-    #3659d4
+    #0f386d75,
+    #0e448f88,
+    #1d4fb280,
+    #3658d483
   );
   color: #dbdbdb;
   display: flex;
@@ -711,7 +711,7 @@ p {
     width: 60vw;
   }
 }
-/* media Query for welcom*/
+/* media Query for welcome*/
 
 /* media Query for main chat and sidebar*/
 @media screen and (max-width: 575px) {
@@ -720,9 +720,6 @@ p {
     gap: 1rem;
     width: 100vw;
     height: 100vh;
-  }
-  .msg-footer{
-    width: 460px;
   }
 }
 @media screen and (min-width: 768px) {

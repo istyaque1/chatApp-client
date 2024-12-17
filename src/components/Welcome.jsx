@@ -1,7 +1,9 @@
 import React from "react";
-import { profilepic, username } from "../utils/getLocalStorage";
+import {useSelector} from "react-redux"
 
 const Welcome = ({ setShowSidebar }) => {
+  const {token,profilepic, username} = useSelector((state)=>state?.user);
+
   return (
     <>
       <div className="welcome-title">

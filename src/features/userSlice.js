@@ -3,6 +3,10 @@ import axios from "axios";
 
 const initialState = {
   isLoading: false,
+  token: localStorage.getItem("token") || null,
+  userid: localStorage.getItem("userid") || null,
+  username: localStorage.getItem("username") || null,
+  profilepic: localStorage.getItem("profilepic") || null,
 };
 
 export const createUser = createAsyncThunk(
@@ -19,7 +23,7 @@ export const createUser = createAsyncThunk(
         }
       );
       toast.success(response?.data?.message);
-      navigate("/login");
+      navigate("/login", { replace: true });
       return response.data;
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
@@ -29,7 +33,7 @@ export const createUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "user/login",
-  async ({ username, password, navigate, toast,dispatch }) => {
+  async ({ username, password, navigate, toast, dispatch }) => {
     try {
       const response = await axios.post(
         "https://chatapp-server-yfh2.onrender.com/user/login",
@@ -40,16 +44,24 @@ export const loginUser = createAsyncThunk(
       );
 
       if (response?.data?.status === true) {
-        localStorage.setItem("token", response?.data?.token);
-        localStorage.setItem("id", response?.data?.userId);
-        localStorage.setItem("username", response?.data?.username);
-        localStorage.setItem("profilepic", response?.data?.profilepic);
+        console.log(response?.data);
+
+        const { token, userId, username, profilepic } = response?.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("userid", userId);
+        localStorage.setItem("username", username);
+        localStorage.setItem("profilepic", profilepic);
 
         toast.success(response?.data?.message);
 
-        navigate("/chat");
+        navigate("/chat", { replace: true });
 
-        return response.data;
+        return {
+          token,
+          userId,
+          username,
+          profilepic,
+        };
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
@@ -60,7 +72,19 @@ export const loginUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      state.token = null;
+      state.userid = null;
+      state.username = null;
+      state.profilepic = null;
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("userid");
+      localStorage.removeItem("username");
+      localStorage.removeItem("profilepic");
+    },
+  },
   extraReducers: (builder) => {
     // register
     builder.addCase(createUser.pending, (state, action) => {
@@ -78,6 +102,11 @@ export const userSlice = createSlice({
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isLoading = false;
+      const { token, userId, username, profilepic } = action.payload;
+      state.token = token;
+      state.userid = userId;
+      state.username = username;
+      state.profilepic = profilepic;
     });
     builder.addCase(loginUser.rejected, (state, action) => {
       state.isLoading = false;
@@ -85,6 +114,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
+export const { logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;

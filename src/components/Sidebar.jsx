@@ -12,7 +12,7 @@ import {
   currentSelectedUser,
   emptyChat,
 } from "../features/messageSlice";
-import { token, profilepic, username } from "../utils/getLocalStorage";
+import { logoutUser } from "../features/userSlice";
 
 const Sidebar = ({ socket, setRefresh, setShowSidebar }) => {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const Sidebar = ({ socket, setRefresh, setShowSidebar }) => {
   const dispatch = useDispatch();
   const { userList } = useSelector((state) => state.getUsers);
   const { selectUser } = useSelector((state) => state.messages);
+  const { token, profilepic, username } = useSelector((state) => state?.user);
 
   useEffect(() => {
     dispatch(getAllUsers(token));
@@ -39,9 +40,8 @@ const Sidebar = ({ socket, setRefresh, setShowSidebar }) => {
   }, [selectUser?._id]);
 
   const handleLogout = () => {
-    localStorage.clear();
+    dispatch(logoutUser());
     navigate("/login");
-    setRefresh((prev) => !prev);
     toast.success("Logged out successfully");
   };
 

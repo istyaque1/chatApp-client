@@ -6,11 +6,13 @@ import { IoReturnDownBack } from "react-icons/io5";
 import InputEmoji from "react-input-emoji";
 import { useDispatch, useSelector } from "react-redux";
 import { currentSelectedUser, appendMessage } from "../features/messageSlice";
-import { token, id, profilepic } from "../utils/getLocalStorage";
 
 const MessageContainer = ({ socket, setShowSidebar }) => {
   const [input, setInput] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const { token, profilepic, userid } = useSelector((state) => state?.user);
+
+  console.log(userid, token, profilepic);
 
   const messageContainerRef = useRef(null);
   const dispatch = useDispatch();
@@ -40,8 +42,8 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
   };
 
   useEffect(() => {
-    if (id) {
-      socket.emit("join", id);
+    if (userid) {
+      socket.emit("join", userid);
     }
 
     const handleNewMessage = (message) => {
@@ -131,11 +133,13 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                 message?.map((chat) => (
                   <div
                     className={`${
-                      id === chat?.senderID ? "single-chat-own" : "single-chat"
+                      userid === chat?.senderID
+                        ? "single-chat-own"
+                        : "single-chat"
                     }`}
                     key={chat?._id}
                   >
-                    {id === chat?.senderID ? (
+                    {userid === chat?.senderID ? (
                       <>
                         <p className="one-chat">
                           <span className="m">{chat?.message}</span>
