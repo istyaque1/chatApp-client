@@ -216,6 +216,13 @@ img {
   display: flex;
   align-items: center;
   border-top: 1px solid #434641de;
+  gap: 10px;
+}
+
+.emoji{
+  position: absolute;
+  top: 22rem;
+  left: 5rem;
 }
 
 .msg-footer input {

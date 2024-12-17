@@ -6,13 +6,14 @@ import { IoReturnDownBack } from "react-icons/io5";
 import InputEmoji from "react-input-emoji";
 import { useDispatch, useSelector } from "react-redux";
 import { currentSelectedUser, appendMessage } from "../features/messageSlice";
+import EmojiPicker from "emoji-picker-react";
 
 const MessageContainer = ({ socket, setShowSidebar }) => {
   const [input, setInput] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { token, profilepic, userid } = useSelector((state) => state?.user);
+  const [showEmoji, setShowEmoji] = useState(false);
 
-  console.log(userid, token, profilepic);
 
   const messageContainerRef = useRef(null);
   const dispatch = useDispatch();
@@ -114,6 +115,9 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
               </div>
             </div>
             <div className="msg-body" ref={messageContainerRef}>
+            <div>
+          <EmojiPicker open={showEmoji} className="emoji"/>
+          </div>
               {loading ? (
                 <div className="loader"></div>
               ) : message?.length === 0 ? (
@@ -193,11 +197,16 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message"
               ></input>
+              <div>
+                
+                <span style={{cursor:"pointer", fontSize:"1.2rem"}} onClick={()=>setShowEmoji((prev)=>!prev)}>😀</span>
+              </div>
               <button onClick={handleSend} type="submit">
                 <IoSend />
               </button>
             </form>
           </div>
+        
         </>
       )}
     </>
