@@ -95,7 +95,7 @@ const Login = () => {
             color: "#eb3678",
           }}
         >
-          <p className="have-account">
+          <p className="have-account" >
             don't have an account ,
             <span onClick={() => navigate("/register")}>sign up</span>
           </p>

@@ -181,28 +181,15 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
             </div>
 
             <form className="msg-footer">
-           <div style={{width:"100%"}}>
-           <InputEmoji
-                value={input}
-                onChange={setInput}
-                cleanOnEnter
-                placeholder="Type a message"
-              />
-           </div>
+              <div style={{ width: "100%" }}>
+                <InputEmoji
+                  value={input}
+                  onChange={setInput}
+                  cleanOnEnter
+                  placeholder="Type a message"
+                />
+              </div>
 
-              {/* <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type a message"
-              ></input>
-              <div>
-                <span
-                  style={{ cursor: "pointer", fontSize: "1.2rem" }}
-                  onClick={() => setShowEmoji((prev) => !prev)}
-                >
-                  😀
-                </span>
-              </div> */}
               <button onClick={handleSend} type="submit">
                 <IoSend />
               </button>

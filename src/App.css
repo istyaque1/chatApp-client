@@ -386,7 +386,8 @@ p {
 .form .have-account {
   color: white;
   margin-top: 10px;
-  text-align: center;
+  text-align: center !important;
+  width: 100%;
 }
 .form .have-account span {
   color: #eb3678;

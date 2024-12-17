@@ -1,13 +1,12 @@
 import React from "react";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 
 const Welcome = ({ setShowSidebar }) => {
-  const {token,profilepic, username} = useSelector((state)=>state?.user);
+  const { token, profilepic, username } = useSelector((state) => state?.user);
 
   return (
     <>
       <div className="welcome-title">
-        <h2>Welcome</h2>
         <div
           style={{
             width: "80px",
@@ -26,6 +25,8 @@ const Welcome = ({ setShowSidebar }) => {
             }}
           />
         </div>
+        <h2>Welcome</h2>
+
         <p>{username}</p>
         <p style={{ color: "white" }}>To</p>
         <h1>snapTalk</h1>
