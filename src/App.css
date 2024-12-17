@@ -221,8 +221,9 @@ img {
 
 .emoji{
   position: absolute;
-  top: 22rem;
-  left: 5rem;
+  bottom: 5rem;
+  left: 8rem;
+
 }
 
 .msg-footer input {

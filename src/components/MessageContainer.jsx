@@ -115,9 +115,7 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
               </div>
             </div>
             <div className="msg-body" ref={messageContainerRef}>
-            <div>
-          <EmojiPicker open={showEmoji} className="emoji"/>
-          </div>
+           
               {loading ? (
                 <div className="loader"></div>
               ) : message?.length === 0 ? (
@@ -206,7 +204,9 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
               </button>
             </form>
           </div>
-        
+          <div style={{display:`${showEmoji === false ? "none" : "block"}`}} className="emoji">
+          <EmojiPicker open={showEmoji}  height={400} width={250}/>
+          </div>
         </>
       )}
     </>
