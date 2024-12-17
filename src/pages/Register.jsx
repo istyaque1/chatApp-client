@@ -34,13 +34,13 @@ const Register = () => {
   };
 
   const handleSubmit = (e) => {
-    const { fullname, username, password, confirmpassword } = value;
     e.preventDefault();
+    const { fullname, username, password, confirmpassword } = value;
 
-    if (file === "") {
-      toast.error("Profile image is required");
-    }
-
+    // if (!file) {
+    //   toast.error("Image is requireqdwd");
+    //   return;
+    // }
     const formData = new FormData();
     formData.append("fullname", fullname);
     formData.append("username", username);
@@ -173,7 +173,7 @@ const Register = () => {
           <span style={{ fontSize: "14px", color: "#fff" }}>{file?.name}</span>
         </div>
         <div className="submit-btn" style={{ height: "37px" }}>
-          <button onClick={handleSubmit} className="btn">
+          <button onClick={handleSubmit} className="btn" type="submit">
             Sign Up
             {isLoading && <span className="loaders"></span>}
           </button>
