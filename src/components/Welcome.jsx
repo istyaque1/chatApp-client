@@ -31,7 +31,7 @@ const Welcome = ({ setShowSidebar }) => {
         <p style={{ color: "white" }}>To</p>
         <h1>snapTalk</h1>
 
-        <button onClick={() => setShowSidebar(true)}>Start chatting</button>
+        <button onClick={() => setShowSidebar(true)}>Let’s Talk!</button>
       </div>
     </>
   );
