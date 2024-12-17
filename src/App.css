@@ -53,8 +53,6 @@ label ::placeholder {
   height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
-
 }
 
 .main-sidebar {
@@ -222,11 +220,9 @@ img {
   gap: 10px;
 }
 
-.emoji{
-  position: absolute;
-  bottom: 5rem;
-  left: 3rem;
-
+.react-emoji-picker--wrapper{
+  width: 290px;
+  overflow: unset;
 }
 
 .msg-footer input {
