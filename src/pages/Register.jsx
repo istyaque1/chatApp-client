@@ -32,19 +32,15 @@ const Register = () => {
       [name]: value,
     }));
   };
-  console.log("hello");
-
 
   const handleSubmit = (e) => {
     const { fullname, username, password, confirmpassword } = value;
     e.preventDefault();
 
-    if(!file){
-      toast.error("Profile image is required")
+    if (file === "") {
+      toast.error("Profile image is required");
     }
 
-    console.log(file);
-    
     const formData = new FormData();
     formData.append("fullname", fullname);
     formData.append("username", username);
