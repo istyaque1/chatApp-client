@@ -14,7 +14,6 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
   const { token, profilepic, userid } = useSelector((state) => state?.user);
   const [showEmoji, setShowEmoji] = useState(false);
 
-
   const messageContainerRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -115,7 +114,6 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
               </div>
             </div>
             <div className="msg-body" ref={messageContainerRef}>
-           
               {loading ? (
                 <div className="loader"></div>
               ) : message?.length === 0 ? (
@@ -196,16 +194,28 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                 placeholder="Type a message"
               ></input>
               <div>
-                
-                <span style={{cursor:"pointer", fontSize:"1.2rem"}} onClick={()=>setShowEmoji((prev)=>!prev)}>😀</span>
+                <span
+                  style={{ cursor: "pointer", fontSize: "1.2rem" }}
+                  onClick={() => setShowEmoji((prev) => !prev)}
+                >
+                  😀
+                </span>
               </div>
               <button onClick={handleSend} type="submit">
                 <IoSend />
               </button>
             </form>
           </div>
-          <div style={{display:`${showEmoji === false ? "none" : "block"}`}} className="emoji">
-          <EmojiPicker open={showEmoji}  height={400} width={250}/>
+          <div
+            style={{ display: `${showEmoji === false ? "none" : "block"}` }}
+            className="emoji"
+          >
+            <EmojiPicker
+              open={showEmoji}
+              height={400}
+              width={270}
+              searchDisabled={true}
+            />
           </div>
         </>
       )}

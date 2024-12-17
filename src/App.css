@@ -45,6 +45,7 @@ label ::placeholder {
   display: flex;
   background-color: #181c14;
   border-radius: 5px;
+
 }
 
 .main-chat {
@@ -52,6 +53,8 @@ label ::placeholder {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+
 }
 
 .main-sidebar {
