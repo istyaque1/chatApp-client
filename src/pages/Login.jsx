@@ -99,12 +99,12 @@ const Login = () => {
             don't have an account ,
             <span onClick={() => navigate("/register")}>sign up</span>
           </p>
-          {/* <p
+          <p
             style={{ cursor: "pointer" }}
             onClick={() => navigate("/forget-password")}
           >
             Forget password
-          </p> */}
+          </p>
         </div>
       </div>
       <div className="svg">

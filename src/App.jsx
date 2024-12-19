@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import {useSelector} from "react-redux";
 import { Toaster } from "react-hot-toast";
 import ForgetPassword from "./pages/ForgetPassword";
+import Reset from "./pages/Reset";
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
         />
         <Route path="/" element={<HomePage />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset" element={<Reset />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster />
