@@ -44,6 +44,8 @@ export const loginUser = createAsyncThunk(
       );
 
       if (response?.data?.status === true) {
+        console.log(response?.data);
+
         const { token, userId, username, profilepic } = response?.data;
         localStorage.setItem("token", token);
         localStorage.setItem("userid", userId);
@@ -54,12 +56,7 @@ export const loginUser = createAsyncThunk(
 
         navigate("/chat", { replace: true });
 
-        return {
-          token,
-          userId,
-          username,
-          profilepic,
-        };
+        return response?.data;
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
