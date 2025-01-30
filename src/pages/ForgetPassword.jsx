@@ -11,8 +11,8 @@ const ForgetPassword = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8000/user/reset-password", {
-      // .post("https://chatapp-server-yfh2.onrender.com/user/reset-password", {
+      // .post("http://localhost:8000/user/reset-password", {
+      .post("https://chatapp-server-yfh2.onrender.com/user/reset-password", {
         username: input,
       })
       .then((res) => {

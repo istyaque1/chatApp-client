@@ -15,8 +15,8 @@ export const messages = createAsyncThunk(
 
     try {
       const response = await axios.get(
-        `http://localhost:8000/user/get/message/${id}`,
-        // `https://chatapp-server-yfh2.onrender.com/user/get/message/${id}`,
+        // `http://localhost:8000/user/get/message/${id}`,
+        `https://chatapp-server-yfh2.onrender.com/user/get/message/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

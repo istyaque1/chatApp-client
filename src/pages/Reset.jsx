@@ -21,8 +21,8 @@ const Reset = () => {
     }
 
     axios
-      .post("http://localhost:8000/user/reset", {
-      // .post("https://chatapp-server-yfh2.onrender.com/user/reset", {
+      // .post("http://localhost:8000/user/reset", {
+      .post("https://chatapp-server-yfh2.onrender.com/user/reset", {
         password,
         confirmPassword,
         user: state,
