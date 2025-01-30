@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { IoSend } from "react-icons/io5";
+import { IoSend, IoReturnDownBack } from "react-icons/io5";
 import Welcome from "./Welcome";
-import { IoReturnDownBack } from "react-icons/io5";
 import InputEmoji from "react-input-emoji";
 import { useDispatch, useSelector } from "react-redux";
 import { currentSelectedUser, appendMessage } from "../features/messageSlice";
@@ -10,37 +9,16 @@ import EmojiPicker from "emoji-picker-react";
 
 const MessageContainer = ({ socket, setShowSidebar }) => {
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [typingUser, setTypingUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { token, profilepic, userid } = useSelector((state) => state?.user);
   const [showEmoji, setShowEmoji] = useState(false);
-
   const messageContainerRef = useRef(null);
   const dispatch = useDispatch();
-
   const { loading, message, selectUser } = useSelector(
     (state) => state.messages
   );
-
-  const handleSend = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        `https://chatapp-server-yfh2.onrender.com/user/send/message/${selectUser?._id}`,
-        { message: input },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        dispatch(appendMessage(res?.data?.newMessage));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setInput("");
-  };
 
   useEffect(() => {
     if (userid) {
@@ -75,6 +53,63 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
     }
   }, [message]);
 
+  useEffect(() => {
+    socket.on("typing", ({ senderId }) => {
+      if (senderId === selectUser?._id) {
+        setTypingUser(senderId);
+      }
+    });
+
+    socket.on("stop typing", ({ senderId }) => {
+      if (senderId === selectUser?._id) {
+        setTypingUser(null);
+      }
+    });
+
+    return () => {
+      socket.off("typing");
+      socket.off("stop typing");
+    };
+  }, [selectUser, socket]);
+
+  const handleTyping = () => {
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", { senderId: userid, receiverId: selectUser?._id });
+
+      setTimeout(() => {
+        setTyping(false);
+        socket.emit("stop typing", {
+          senderId: userid,
+          receiverId: selectUser?._id,
+        });
+      }, 1000);
+    }
+  };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    socket.emit("stop typing", {
+      senderId: userid,
+      receiverId: selectUser?._id,
+    });
+
+    axios
+      .post(
+        `https://chatapp-server-yfh2.onrender.com/user/send/message/${selectUser?._id}`,
+        { message: input },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        dispatch(appendMessage(res?.data?.newMessage));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setInput("");
+  };
+
   const handleBack = () => {
     setShowSidebar(true);
     dispatch(currentSelectedUser(null));
@@ -94,12 +129,19 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                 <img src={selectUser?.profilepic} alt="" />
                 <div>
                   <p>{selectUser?.fullname}</p>
-                  {onlineUsers.includes(selectUser?._id) && (
+                  {typingUser === selectUser?._id ? (
                     <span style={{ color: "#dbdbdb", fontSize: "12px" }}>
-                      online
+                      typing...
                     </span>
+                  ) : (
+                    onlineUsers.includes(selectUser?._id) && (
+                      <span style={{ color: "#dbdbdb", fontSize: "12px" }}>
+                        online
+                      </span>
+                    )
                   )}
                 </div>
+
                 <span
                   style={{
                     fontSize: "1.5rem",
@@ -113,6 +155,7 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                 </span>
               </div>
             </div>
+
             <div className="msg-body" ref={messageContainerRef}>
               {loading ? (
                 <div className="loader"></div>
@@ -144,16 +187,6 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                       <>
                         <p className="one-chat">
                           <span className="m">{chat?.message}</span>
-                          <span className="time">
-                            {new Date(chat?.createdAt).toLocaleTimeString(
-                              "en-US",
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
-                              }
-                            )}
-                          </span>
                         </p>
                         <img src={profilepic} alt="" />
                       </>
@@ -162,16 +195,6 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
                         <img src={selectUser?.profilepic} alt="" />
                         <p className="one-chat">
                           <span>{chat?.message}</span>
-                          <span className="time">
-                            {new Date(chat?.createdAt).toLocaleTimeString(
-                              "en-US",
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
-                              }
-                            )}
-                          </span>
                         </p>
                       </>
                     )}
@@ -181,30 +204,16 @@ const MessageContainer = ({ socket, setShowSidebar }) => {
             </div>
 
             <form className="msg-footer">
-              <div style={{ width: "100%" }}>
-                <InputEmoji
-                  value={input}
-                  onChange={setInput}
-                  cleanOnEnter
-                  placeholder="Type a message"
-                />
-              </div>
-
+              <InputEmoji
+                value={input}
+                onChange={setInput}
+                onKeyDown={handleTyping}
+                placeholder="Type a message"
+              />
               <button onClick={handleSend} type="submit">
                 <IoSend />
               </button>
             </form>
-          </div>
-          <div
-            style={{ display: `${showEmoji === false ? "none" : "block"}` }}
-            className="emoji"
-          >
-            <EmojiPicker
-              open={showEmoji}
-              height={400}
-              width={270}
-              searchDisabled={true}
-            />
           </div>
         </>
       )}

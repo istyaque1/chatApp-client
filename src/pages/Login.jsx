@@ -7,6 +7,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { loginUser } from "../features/userSlice";
 import { useDispatch } from "react-redux";
+import { motion } from "motion/react";
 
 const Login = () => {
   const [value, setValue] = useState({
@@ -29,7 +30,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     const { username, password } = value;
     e.preventDefault();
-    dispatch(loginUser({ username, password, navigate, toast,dispatch }));
+    dispatch(loginUser({ username, password, navigate, toast, dispatch }));
   };
 
   return (
@@ -82,9 +83,11 @@ const Login = () => {
             </span>
           </div>
         </div>
-        <button onClick={handleSubmit} className="btn">
-          Login
-        </button>
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+          <button onClick={handleSubmit} className="btn">
+            Login
+          </button>
+        </motion.div>
         <div
           className="login-footer"
           style={{
@@ -95,7 +98,7 @@ const Login = () => {
             color: "#eb3678",
           }}
         >
-          <p className="have-account" >
+          <p className="have-account">
             don't have an account ,
             <span onClick={() => navigate("/register")}>sign up</span>
           </p>

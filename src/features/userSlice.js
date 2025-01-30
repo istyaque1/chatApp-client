@@ -36,7 +36,8 @@ export const loginUser = createAsyncThunk(
   async ({ username, password, navigate, toast, dispatch }) => {
     try {
       const response = await axios.post(
-        "https://chatapp-server-yfh2.onrender.com/user/login",
+        "http://localhost:8000/user/login",
+        // "https://chatapp-server-yfh2.onrender.com/user/login",
         {
           username,
           password,
@@ -44,8 +45,6 @@ export const loginUser = createAsyncThunk(
       );
 
       if (response?.data?.status === true) {
-        console.log(response?.data);
-
         const { token, userId, username, profilepic } = response?.data;
         localStorage.setItem("token", token);
         localStorage.setItem("userid", userId);
